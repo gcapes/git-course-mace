@@ -52,11 +52,6 @@ view](https://help.github.com/articles/comparing-commits-across-time)
 
 Git can be configured to use graphical diff tools, and this is functionality
 is accessed using `git difftool` in place of `git diff`.
-Configuring a visual diff tool is covered on the
-[hints and tips](11-hints-and-tips.html) page.
-The choice of GUI for viewing differences depends on the context in which you
-are working and your own preferences related to choosing tools and
-technologies.
 
 Now commit the change we made by adding the second reference:
 ```
