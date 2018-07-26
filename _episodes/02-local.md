@@ -72,18 +72,6 @@ To set up alternative editors, follow the same notation e.g.
 `git config --global core.editor notepad`, `git config --global core.editor vi`,
 `git config --global core.editor xemacs`.
 
-## Colours in Git
-
-On many computers, the terminal output is automatically coloured which makes
-reading the output easier.
-If your output is not coloured (e.g. in the Sackville/G11 cluster) there is a command
-which will add the colour (**note the spelling of *color***):
-
-```
-$ git config --global --add color.ui true			# Note US spelling of color
-```
-{: .bash}
-
 ## Git's global configuration
 
 We can now preview (and edit, if necessary) Git's global configuration (such as
