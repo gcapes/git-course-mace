@@ -136,21 +136,34 @@ accidentally delete this directory!
 
 ## Tracking files with a git repository
 
-Now, we'll create a file. Let's say we're going to write a journal paper, so
-we will start by adding the author names and a title, then save the file.
+Now, we'll create a file for our first conversion.
+The file will be called `kelvin_to_celsius.m` and should be saved in the
+working directory.
+We can either create a new file from the Git prompt
 
-~~~
-$ gedit journal.md						# Windows users: use notepad instead of gedit (throughout this course)
-# Add author names and paper title
-~~~
+```
+gedit kelvin_to_celsius.m
+```
 {: .bash}
 
-> ## Accessing files from the command line
-> In this lesson we create and modify text files using a command line interface
-> (e.g. terminal, Git Bash etc), mainly for convenience.
-> These are normal files which are also accessible from the file browser (e.g. Windows explorer), 
-> and by other programs.
-{: .callout}
+or we can create the file from within MATLAB.
+Just be sure to save it to the working directory --- recall that we can
+return the current directory using the following command:
+
+```
+pwd
+```
+{: .bash}
+
+Create the file with the following contents:
+
+```
+function celsius = kelvin_to_celsius(kelvin)
+    celsius = kelvin - 273.15
+end
+```
+{: .matlab}
+
 
 `git status` allows us to find out about the current status
 of files in the repository. So we can run,
@@ -167,7 +180,7 @@ Initial commit
 Untracked files:
 (use "git add <file>..." to include in what will be committed)
 
-journal.md
+kelvin_to_celsius.m
 
 nothing added to commit but untracked files present (use "git add" to track)
 ~~~
@@ -175,19 +188,19 @@ nothing added to commit but untracked files present (use "git add" to track)
 
 Information about what Git knows about the directory is displayed. We are on
 the `master` branch, which is the default branch in a Git respository
-(one way to think of branches is like parallel versions of the project - more
+(one way to think of branches is like parallel versions of the project --- more
 on branches later).
 
 For now, the important bit of information is that our file is listed as
 **Untracked** which means it is in our working directory but Git is not
-tracking it - that is, any changes made to this file will not be recorded by
+tracking it --- that is, any changes made to this file will not be recorded by
 Git.
 
 ## Add files to a Git repository
 To tell Git about the file, we will use the `git add` command:
 
 ~~~
-$ git add journal.md 
+$ git add kelvin_to_celsius.m 
 $ git status 
 ~~~
 {: .bash}
@@ -199,7 +212,7 @@ Initial commit
 Changes to be committed:
 (use "git rm --cached <file>..." to unstage)
 
-      	new file:   journal.md
+      	new file:   kelvin_to_celsius.m
 ~~~
 {: .output}
 
@@ -222,8 +235,8 @@ we need to  **commit** it:
 
 ~~~
 $ git commit
-# Type a commit message: "Add title and authors"
-# Save the commit message and close your text editor (gedit, notepad etc.)
+	# Now type a commit message: 'Add kelvin to celsius conversion'
+	# Save the commit message and close your text editor (gedit, notepad etc.)
 ~~~
 {: .bash}
 
@@ -236,16 +249,17 @@ If we save our commit message **and exit the editor**, Git will now commit our f
 
 ~~~
 [master (root-commit) 21cfbde] 
-1 file changed, 2 insertions(+) Add title and authors
-create mode 100644 journal.md
+1 file changed, 3 insertions(+) Add kelvin to celsius conversion
+create mode 100644 kelvin_to_celsius.m
 ~~~
 {: .output}
 
 This output shows the number of files changed and the number of lines inserted
 or deleted across all those files. Here, we have changed (by adding) 1 file and
-inserted 2 lines.
+inserted 3 lines.
 
-Now, if we look at its status,
+Now, if we look at the status, our staging area is empty because we've
+commited those previously staged changes:
 
 ~~~
 $ git status
@@ -257,18 +271,21 @@ nothing to commit, working directory clean
 ~~~
 {: .output}
 
-our file is now in the repository. 
 The output from the `git status` command means that we have a clean directory
 i.e. no tracked but modified files. 
 
-Now we will work a bit further on our *journal.md* file by writing the introduction
-section.
+Now we will work a bit further on our *kelvin_to_celsius.m* file by adding an H1 line.
+Edit your file as below (then save it):
    
 ```
-$ gedit journal.md
-# Write introduction section
+function celsius = kelvin_to_celsius(kelvin)
+    %KELVIN_TO_CELSIUS   Convert Kelvin to degrees Celsius
+
+    celsius = kelvin - 273.15
+end
 ```
-{: .bash}
+{: .matlab}
+
 If we now run,
 
 ~~~
@@ -276,7 +293,7 @@ $ git status
 ~~~
 {: .bash}
 
-we see changes not staged for commit section and our file is marked as
+we see a *changes not staged for commit* section and our file is marked as
 modified: 
 
 ~~~
@@ -285,7 +302,7 @@ Changes not staged for commit:
 (use "git add <file>..." to update what will be committed)
 (use "git checkout -- <file>..." to discard changes in working directory)
 
-     modified:   journal.md
+     modified:   kelvin_to_celsius.m
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ~~~
@@ -296,56 +313,54 @@ has not yet been committed. So we can add it to the staging area and then
 commit the changes:
      
 ~~~
-$ git add journal.md 
-$ git commit							# "Write introduction"
+$ git add kelvin_to_celsius.m
+$ git commit							# "Add help text"
 ~~~
 {: .bash}
-Note that in this case we used `git add` to put journal.md to the staging
+
+Note that in this case we used `git add` to put *kelvin_to_celsius.m* in the staging
 area. Git already knows this file should be tracked but doesn't know if we want
-to commit the changes we made to the file  in the repository and hence we have
-to add the file to the staging area. 
+to commit the changes we made to the file
+and hence we have to add the file to the staging area. 
 
 It can sometimes be quicker to provide our commit messages at the command-line
-by doing `git commit -m "Write introduction section"`.
+by doing `git commit -m "Add help text"`.
 
-Let's add a directory *common* and a file *references.txt* for references we may
-want to reuse:
+So far we have dealt with one file at a time,
+but sometimes a logical set of changes will span multiple files.
 
-~~~
-$ mkdir common 
-$ gedit common/references.txt					# Add a reference
-~~~
+Next we'll write a couple of functions to convert
+Fahrenheit to Celsius and vice-versa.
+
+Create the following files: `fahrenheit_to_celsius.m`
+
+```
+function celsius = fahrenheit_to_celsius(fahrenheit)
+    %FAHRENHEIT_TO_CELSIUS   Convert Fahrenheit to Celsius
+
+    celsius = (fahrenheit-32) * (5/9);
+end
+```
+{: .matlab}
+
+and `celsius_to_fahrenheit.m`
+
+```
+function fahrenheit = celsius_to_fahrenheit(celsius)
+    %CELSIUS_TO_FAHRENHEIT   Convert Celsius to Fahrenheit 
+
+    fahrenheit = celsius*(9/5) + 32;
+end
+```
+{: .matlab}
+
+Now add both the files to the staging area,
+and make a commit:
+
+```
+$ git add celsius_to_fahrenheit.m fahrenheit_to_celsius.m
+$ git commit -m 'Add functions to convert between C and F
+```
 {: .bash}
-
-We will also add a citation in our introduction section (in journal.md).
-
-~~~
-$ gedit journal.md 						# Use reference in introduction
-~~~
-{: .bash}
-
-Now we need to record our work in the repository so we need to make a commit.
-First we tell Git to track the references.
-We can actually tell Git to track everything in the given subdirectory:
-
-~~~
-$ git add common						# Track everything currently in the 'common' directory
-$ git status							# Verify that common/references.txt is now tracked
-~~~
-{: .bash}
-
-All files that are in *common* are now tracked.  We would also have to add
-journal.md in the staging area. But there is a shortcut. We can use
-`commit -a`. This option means "commit all files that are tracked and
-that have been modified".
-
-~~~
-$ git commit -am "Reference J Bloggs and add references file" 	# Add and commit all tracked files
-~~~
-{: .bash}
-and Git will add, then commit, both the directory and the file.
-
-In order to add all tracked files to the staging area, use `git commit -a`
-(which may be very useful if you edit e.g. 10 files and now you want to commit all of them).
 
 ![The Git commit workflow](../fig/git-committing.svg)
