@@ -93,9 +93,9 @@ i.e. the `--global` commands above are only required once per computer.
 
 ## Create a new repository with Git
 
-We will be working with a simple example in this tutorial. It will be a paper
-that we will first start writing as a single author and then work on it further
-with one of our colleagues. 
+We will be working with a simple example in this tutorial. It will be a series
+of MATLAB functions to convert units, which we will then use to develop
+a series of figures and look-up tables.
 
  First, let's create a directory within your home directory:
 
