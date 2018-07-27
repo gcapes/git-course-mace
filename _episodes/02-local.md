@@ -364,3 +364,26 @@ $ git commit -m 'Add functions to convert between C and F
 {: .bash}
 
 ![The Git commit workflow](../fig/git-committing.svg)
+
+As something of a sanity check, we might just want to test the output of these
+functions --- we'll do that with the following script:
+
+```
+%TEMPERATURE_CONVERSIONS
+
+% Save degree symbol as a variable
+deg = char(176);
+
+disp(['Water boils at 100', deg, 'C, which is ', num2str(celsius_to_fahrenheit(100)), deg, 'F.'])
+fprintf('Water freezes at %g%sC, which is %g%sF.\n', fahrenheit_to_celsius(32), deg, 32, deg)
+```
+{: .matlab}
+
+Then we'll commit the script:
+
+```
+$ git add temperature_conversions.m
+$ git commit
+	# Commit message: 'Add script to print key conversions'
+```
+{: .bash}
