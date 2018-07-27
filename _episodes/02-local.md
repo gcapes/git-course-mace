@@ -102,8 +102,8 @@ a series of figures and look-up tables.
 ```
 $ cd								# Switch to your home directory.
 $ pwd								# Print working directory (output should be /home/<username>)
-$ mkdir papers 
-$ cd papers
+$ mkdir conversions 
+$ cd conversions
 ```	
 {: .bash}
 
@@ -115,11 +115,11 @@ $ git init
 ~~~
 {: .bash}
 ~~~
-Initialized empty Git repository in /home/user/papers/.git/
+Initialized empty Git repository in /home/user/conversions/.git/
 ~~~
 {: .output}
 
-The directory "papers" is now our working directory. 
+The directory *conversions* is now our working directory. 
 
  If we look in this directory, we'll find a `.git` directory:
 

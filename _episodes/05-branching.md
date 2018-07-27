@@ -136,7 +136,7 @@ $ git commit			# "Rewrite title emphasising measurements"
 
 ### Merging and resolving conflicts
 
-We are now working on two papers: the main one in our `master` branch and the one
+We are now working on two versions: the main one in our `master` branch and the one
 which may possibly be collaborative work in our "paperWJohn" branch.
 Let's add another section to the paper to write about John's simulations.
 
