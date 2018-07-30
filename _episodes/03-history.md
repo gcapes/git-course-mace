@@ -304,7 +304,7 @@ fprintf('Absolute zero is %g%sF.\n', celsius_to_fahrenheit(kelvin_to_celsius(0))
 
 ```
 $ git add temperature_conversions.m
-$ git commit -m "Print 0K in Fahrenhit" temperature_conversions.m
+$ git commit temperature_conversions.m -m "Print 0K in Fahrenhit" 
 ```
 {: .bash}
 
