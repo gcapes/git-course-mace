@@ -76,21 +76,23 @@ on the Atlassian website.
 
 ### Branching in practice
 
-One of our colleagues wants to contribute to the paper but is not quite sure
-if it will actually make a publication. So it will be safer to create a branch
-and carry on working on this "experimental" version of the paper in a branch
-rather than in the master.
+We have worked so far with the three most widely used temperature scales,
+but after a little research it turns out these are far from the only temperature scales.
+We decide to try out conversions from
+[degrees Newton](https://en.wikipedia.org/wiki/Newton_scale) to Celsius.
+We're just trying out this idea, so we'll create a new branch to work in.
 
 ~~~
-$ git checkout -b paperWJohn
+$ git checkout -b newton
 ~~~
 {: .bash}
 ~~~
-Switched to a new branch 'paperWJohn'
+Switched to a new branch 'newton'
 ~~~
 {: .output}
 
-We're going to change the title of the paper and update the author list (adding John Smith).
+We're going to add a function to convert from the Newton scale to Celsius,
+and update our script to print out some values.
 However, before we get started it's a good practice to check that we're working
 on the right branch.
 
@@ -100,16 +102,43 @@ $ git branch			# Double check which branch we are working on
 {: .bash}
 ~~~
   master
-* paperWJohn 
+* newton
 ~~~
 {: .output}
 
-The * indicates which branch we're currently in. Now let's make the changes to the paper.
+The * indicates which branch we're currently on.
+Now let's write that function and update the script by adding an H1 comment
+and printing a conversion from Newton to Celsius.
+
+```
+function celsius = newton_to_celsius(newton)
+    %NEWTON_TO_CELSIUS   Convert Newton scale to Celsius
+
+    celsius = 100/33 * newton;
+end
+```
+{: .matlab}
+
+```
+%TEMPERATURE_CONVERSIONS
+% Check temperature conversions between Kelvin, Fahrenheit, Celsius and
+% Newton
+
+% Save degree symbol as a variable
+deg = char(176);
+
+disp(['Water boils at 100', deg, 'C, which is ', num2str(celsius_to_fahrenheit(100)), deg, 'F.'])
+fprintf('Water freezes at %g%sC, which is %g%sF.\n', fahrenheit_to_celsius(32), deg, 32, deg)
+fprintf('Absolute zero is 0K, which is %g%sC.\n', kelvin_to_celsius(0), deg)
+fprintf('Absolute zero is %g%sF.\n', celsius_to_fahrenheit(kelvin_to_celsius(0)), deg)
+
+fprintf('33 %sN is %g%sC.\n', deg, newton_to_celsius(33), deg)
+```
+{: .matlab}
 
 ~~~
-$ gedit journal.md		# Change title and add co-author
-$ git add journal.md
-$ git commit			# "Modify title and add John as co-author"
+$ git add temperature_conversions.m newton_to_celsius.m
+$ git commit			# "Add Newton to Celsius conversion"
 ~~~
 {: .bash}
 
@@ -124,29 +153,26 @@ Switched to branch 'master'
 ~~~
 {: .output}
 
-Having written some of the paper, we have thought of a better title for
-the `master` version of the paper.
+The script on this branch doesn't have any help text, so let's fix that.
+
+```
+%TEMPERATURE_CONVERSIONS
+% Convert key temperature values between Fahrenheit, Kelvin, and Celsius
+
+...
+```
+{: .matlab}
 
 ~~~
-$ gedit journal			# Rewrite the title
-$ git add journal.md
-$ git commit			# "Rewrite title emphasising measurements"
+$ git add temperature_conversions.m
+$ git commit			# "Add help text for script"
 ~~~
 {: .bash}
 
 ### Merging and resolving conflicts
 
 We are now working on two versions: the main one in our `master` branch and the one
-which may possibly be collaborative work in our "paperWJohn" branch.
-Let's add another section to the paper to write about John's simulations.
-
-~~~
-$ git checkout paperWJohn	# Switch branch
-$ gedit journal.md		# Add 'simulations' section
-$ git add journal.md 
-$ git commit -m "Add simulations" journal.md
-~~~
-{: .bash}
+which we may or may not want to keep in our *newton* branch.
 
 At this point let's just quickly visualise the state of our repo,
 and we can see the forked commit history reflecting the recent work
@@ -158,38 +184,37 @@ git log --graph --all --oneline --decorate
 {: .bash}
 
 ```
-* 89d5c6e (paperwjohn) Add simulations section
-* 05d393a Modify title and add coauthor
-| * (HEAD, master) bdebbe0 Rewrite title emphasising location
+* 39ba929 (HEAD -> master) Add help text for script
+| * 383bbdd (newton) Add Newton to Celsius conversion
 |/  
-* 87a65e6 Add Bloggs et al paper
-* 6a48241 Reference second paper in introduction
-* ed26351 Reference Allen et al in introduction
-* 7446b1d Write introduction
-* 4f572d5 Add title and authors
+* d09e099 Print 0K in Fahrenheit
+* b7461bf Include Kelvin conversion
+* 6fa25fa Add script to print key conversions
+* 7e795dc Add functions to convert between C and F
+* 414c844 Add help text
+* 25f55bf Add Kelvin to Celsius conversion
 ```
 {: .output}
 
-After some discussions with John we decided that we will publish together,
-hence it makes sense to now merge all that was authored together with John 
-in branch "paperWJohn". 
-We can do that by *merging* that branch with the `master` branch. Let's try
+After some thought we decide that we will keep the Newton conversion,
+hence it makes sense to now combine the changes from both branches. 
+We can do that by *merging* the `newton` branch with the `master` branch. Let's try
 doing that:
 
 ~~~
 $ git checkout master		# Switch branch
-$ git merge paperWJohn		# Merge paperWJohn into master
+$ git merge newton		# Merge newton into master
 ~~~
 {: .bash}
 ~~~
-Auto-merging journal.md
-CONFLICT (content): Merge conflict in journal.md
+Auto-merging temperature_conversions.m
+CONFLICT (content): Merge conflict in temperature_conversions.m
 Automatic merge failed; fix conflicts and then commit the result.
 ~~~
 {: .output}
 
 Git cannot complete the merge because there is a conflict - if you recall,
-after creating the new branch, we changed the title of the paper on both branches.
+after creating the new branch, we added different help text for the script on each branch.
 We have to resolve the conflict and then complete the merge. We can get
 some more detail
 
@@ -202,22 +227,27 @@ On branch master
 You have unmerged paths.
   (fix conflicts and run "git commit")
 
+Changes to be committed:
+
+	new file:   newton_to_celsius.m
+
 Unmerged paths:
   (use "git add <file>..." to mark resolution)
 
-    	both modified:      journal.md
+	both modified:   temperature_conversions.m
 ~~~
 {: .output}
 
-Let's look inside journal.md:
+Let's look inside *temperature_conversions.m:
 
 ```
-title
+%TEMPERATURE_CONVERSIONS
 <<<<<<< HEAD
-Laboratory measurements of atmospheric particle formation
+% Convert key temperature values between Fahrenheit, Kelvin, and Celsius
 =======
-Simulations of atmospheric particle formation
->>>>>>> paperwjohn
+% Check temperature conversions between Kelvin, Fahrenheit, Celsius and
+% Newton
+>>>>>>> newton
 ```
 
 The mark-up shows us the parts of the file causing the conflict and the
@@ -225,20 +255,32 @@ versions they come from. We now need to manually edit the file to resolve the
 conflict. This means removing the mark-up and doing one of:
 
 - Keep the local version, which is the one marked-up by HEAD i.e.
-"Laboratory measurements of atmospheric particle formation"
+*% Convert key temperature values between Fahrenheit, Kelvin, and Celsius*
 
 - Keep the remote version, which is the one marked-up by paperWJohn
-i.e. "Simulations of atmospheric particle formation"
+i.e. *% Check temperature conversions between Kelvin, Fahrenheit, Celsius and
+% Newton*
 
 - Or manually edit the line to something new which might combine some elements
-of the two e.g. "Measurement-model comparison of atmospheric particle formation in laboratory experiments"
+of the two
 
-We edit the file. Then commit our changes:
+Let's edit the file to keep the version from the *newton* branch:
+
+```
+%TEMPERATURE_CONVERSIONS
+% Check temperature conversions between Kelvin, Fahrenheit, Celsius and
+% Newton
+
+% Save degree symbol as a variable
+```
+{: .matlab}
+
+Then commit our changes:
 
 ~~~
-$ gedit journal.md		# Resolve conflict by editing journal.md
-$ git add journal.md		# Let Git know we have resolved the conflict
-$ git commit -m "Rewrite title to incorporate simulations"
+$ git add temperature_conversions.m		# Let Git know we have resolved the conflict
+$ git commit					# Git has already written a commit message for us:
+						# 'Merge branch 'newton'
 ~~~
 {: .bash}
 
@@ -254,26 +296,25 @@ $ git log --graph --decorate --all --oneline
 {: .bash}
 
 ```
-*   39cc80d (HEAD, master) Merge branch 'paperwjohn'
+*   0377892 (HEAD -> master) Merge branch 'newton'
 |\  
-| * 89d5c6e (paperwjohn) Add simulations section
-| * 05d393a Modify title and add coauthor
-* | bdebbe0 Rewrite title emphasising location
+| * 383bbdd (newton) Add Newton to Celsius conversion
+* | 39ba929 Add help text for script
 |/  
-* 87a65e6 Add Bloggs et al paper
-* 6a48241 Reference second paper in introduction
-* ed26351 Reference Allen et al in introduction
-* 7446b1d Write introduction
+* d09e099 Print 0K in Fahrenheit
+* b7461bf Include Kelvin conversion
+* 6fa25fa Add script to print key conversions
 ```
 {: .output}
 
 ### Looking at our history - revisited
 We already looked at "going back in time with Git". But now we'll look at it in
 more detail to see how moving back relates to branches and we will learn how to
-actually undo things. So far we were moving back in time in one branch by 
-checking out one of the past commits. 
+actually undo things.
 
-But we were then in the "detached HEAD" state.
+So far we were moving back in time in one branch
+by checking out one of the past commits ---
+but we were then in the "detached HEAD" state.
 
 > ## Add a commit to detached HEAD
 >
@@ -283,17 +324,18 @@ But we were then in the "detached HEAD" state.
 >
 > > ## Solution
 > > ```
-> > git checkout HEAD~1  # Check out the commit one before last
-> > gedit journal.md     # Make some edits
-> > git add journal.md   # Stage the changes
-> > git commit           # Commit the changes
-> > git branch           # You should see a message like the one below,
-> >                      # indicating your commit does not belong to a branch
+> > git checkout HEAD~1  			# Check out the commit one before last
+> > gedit temperature_conversions.m 	# Make some edits
+> > git add temperature_conversions.m 	# Stage the changes
+> > git commit 				# Commit the changes
+> > git branch 				# You should see a message like the one below,
+> > 					# indicating your commit does not belong to a branch
 > > ```
 > > {: .bash}
 > > ```
-> > * (detached from 57289fb)
+> > * (HEAD detached from 39ba929)
 > >   master
+> >   newton
 > > ```
 > > {: .output}
 > > You have just made a commit on a detached HEAD --
@@ -324,12 +366,12 @@ But we were then in the "detached HEAD" state.
 > > Warning: you are leaving 1 commit behind, not connected to
 > > any of your branches:
 > >
-> > eb7c650 Add empty line for branching exercise
+> > db7d69f Add empty line for branching exercise
 > >
 > > If you want to keep them by creating a new branch, this may be a good time
 > > to do so with:
 > >
-> >  git branch new_branch_name eb7c650
+> >  git branch new_branch_name db7d69f 
 > >
 > >  Switched to branch 'master'
 > >  Your branch is up-to-date with 'master'.
@@ -360,23 +402,23 @@ But we were then in the "detached HEAD" state.
 > > ## Solution 
 > >
 > > ```
-> > git checkout HEAD~1		# Checkout the commit before last
-> > gedit journal.md		# Modify one of your files
-> > git commit -a			# Commit all the modified files
-> > git branch			# List local branches
+> > git checkout HEAD~1			# Checkout the commit before last
+> > gedit temperature_conversions.m		# Modify one of your files
+> > git commit -a				# Commit all the modified files
+> > git branch				# List local branches
 > > ```
 > > {: .bash}
 > >
 > > ```
-> > * (HEAD detached from f908519)
+> > * (HEAD detached from db7d69f)
 > >  master
-> >  paperwjohn
+> >  newton
 > > ```
 > > {: .output}
 > > You are currently on a temporary, unnamed branch, as indicated by the `*`.
 > > ```
-> > git branch dh-exercise		# Create a new branch
-> > git checkout dh-exercise	# Switch to the new branch 
+> > git branch dh-exercise			# Create a new branch
+> > git checkout dh-exercise		# Switch to the new branch 
 > > ```
 > > {: .bash}
 > > ```
@@ -384,19 +426,19 @@ But we were then in the "detached HEAD" state.
 > > ```
 > > {: .output}
 > > ```
-> > git branch			# View local branches
+> > git branch				# View local branches
 > > ```
 > > {: .bash}
 > > ```
 > > * dh-exericise
 > >  master
-> >  paperwjohn
+> >  newton
 > > ```
 > > {: .output}
 > > The commit you made on the detached HEAD now belongs to a named branch
 > > (`dh-exercise` in the example above), rather than a temporary branch.
 > > ```
-> > git checkout master		# Switch back to the 'master' branch
+> > git checkout master			# Switch back to the 'master' branch
 > > ```
 > > {: .bash}
 > > See this [new branch animation] for the key points in this exercise.
