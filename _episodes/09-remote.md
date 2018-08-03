@@ -41,9 +41,9 @@ projects including:
 
 **Note**  GitHub's free repositories have public licences **by default**. If
 you don't want to share (in the most liberal sense) your stuff with the world
-and you want to use GitHub, you will need to pay for the
-private GitHub repositories (GitHub offers up to 5 free private repositories,
-if you are an academic - but do check this information as T&C may change).
+and you want to use GitHub, you will need to pay for
+private GitHub repositories (GitHub offers up to 5 free private repositories
+if you are an academic --- but do check this information as T&C may change).
 
 ### GitHub for research 
 GitHub **isn't** the only remote repostitories provider. It is however very popular, 
@@ -87,6 +87,8 @@ $ git push -u origin master
 The first line sets up an alias `origin`, to correspond to the URL of our
 new repository on GitHub.
 
+Copy and paste the first line now.
+
 
 ### Push locally tracked files to a remote repository
 
@@ -120,7 +122,8 @@ GitHub, we can access our repository.
 
 ### Push other local branches to a remote repository
   
-Let's push each of our local branches into our remote repository:
+Let's push each of our local branches into our remote repository
+using the same syntax as before:
 
 ```
 $ git push origin branch_name
@@ -141,8 +144,8 @@ $ git branch -a
 > To delete branches, use the following syntax:
 >
 > ```
-> $ git branch -d <branch_name>			# For local branches
-> $ git push origin --delete <branch_name>	# For remote branches
+> $ git branch -d branch_name			# For local branches
+> $ git push origin --delete branch_name		# For remote branches
 > ```
 > {: .bash}
 {: .callout}
@@ -162,7 +165,7 @@ Gulp! We've just wiped our local repository! But, as we've a copy on GitHub we
 can just copy, or `git clone` that,
 
 ```
-$ git clone https://github.com/<USERNAME>/conversions.git 
+$ git clone https://github.com/USERNAME/conversions.git 
 ```
 {: .bash}
 ```
@@ -175,7 +178,7 @@ Checking connectivity... done.
 ```
 {: .output}
 
-Cloning creates an exact copy of the repository. By deafult it creates
+Cloning creates an exact copy of the repository. By default it creates
 a directory with the same name as the name of the repository. 
 
 Now, if we change into *conversions* we can see that we have our repository,
@@ -196,7 +199,7 @@ In order to see the other branches locally, we can check them out as before:
 
 ```
 $ git branch -r					# Show remote branches
-$ git checkout results				# Check out the results branch
+$ git checkout newton				# Check out the newton branch
 ```
 {: .bash}
 
@@ -204,12 +207,29 @@ $ git checkout results				# Check out the results branch
 
 We can use our cloned repository just as if it was a local repository so let's
 make some changes to our files and commit these.
+We'll work on the *master* branch to create a plot of Fahrenheit vs Celsius.
 
 ```
 $ git checkout master				# We'll continue working on the master branch
-$ gedit journal.md				# Add section which will contain the figures 
-$ git add journal.md				# Add figures section
-$ git commit
+```
+{: .bash}
+
+Edit `temperature_conversions.m` to contain the following code at the end:
+
+```
+% Plot Fahrenheit vs Celsius
+degC = linspace(0,100,101);
+plot(degC, celsius_to_fahrenheit(degC))
+xlabel('Celsius')
+ylabel('Fahrenheit')
+```
+{:  .matlab}
+
+Now stage and commit the script
+
+```
+$ git add temperature_conversions.m
+$ git commit						# Write a suitable commit message
 ```
 {: .bash}
 
@@ -224,10 +244,9 @@ $ git push origin master
 If we now check our GitHub page we should be able to see our new changes under
 the *Commit* tab.
 
-To see all remote repositories (we can have multiple!) type:
+To see all remote repositories (we can have multiple!):
 	
 ```
 $ git remote -v
 ```
-{: .bash}
 {: .bash}
