@@ -34,7 +34,7 @@ $ ls
 {: .bash}
 
 ```
-$ papers
+$ conversions
 ```
 {: .output}
 
@@ -42,8 +42,8 @@ And let us clone our repository again, but this time specify the local
 directory name,
 
 ```
-$ git clone https://github.com/<USERNAME>/papers.git laptop_papers 
-Cloning into 'laptop_papers'...
+$ git clone https://github.com/<USERNAME>/conversions.git laptop_conversions 
+Cloning into 'laptop_conversions'...
 ```
 {: .bash}
 
@@ -56,21 +56,42 @@ $ ls
 {: .bash}
 
 ```
-$ papers laptop_papers
+$ conversions laptop_conversions
 ```
 {: .output}
 
 Let's pretend these clones are on two separate machines! So we have 3 versions
 of our repository - our two local versions, on our separate machines (we're
-still pretending!) and one on GitHub. So let's go into one of our clones, add an
-acknowledgements section, commit the file and push these changes to GitHub:
+still pretending!) and one on GitHub. So let's go into one of our clones,
+update `temperature_conversions.m` to add a Kelvin--Celsius line to our graph,
+commit the file and push these changes to GitHub.
+
+```
+$ cd conversions		# Change current directory
+```
+{: .bash}
+
+Modify the script from the `conversions` directory so that the final section is as below:
+
+```
+% Plot Fahrenheit vs Celsius
+degC = linspace(0,100,101);
+plot(degC, celsius_to_fahrenheit(degC))
+hold on
+degK = linspace(273, 373, 101);
+plot(kelvin_to_celsius(degK), degK)
+xlabel('Celsius')
+ylabel('Conversion')
+legend('Fahrenheit', 'Kelvin', 'location', 'northwest')
+```
+{: .matlab}
+
+Now commit the file and push:
 
 ```    
-$ cd papers 
-$ gedit journal.md		# Write acknowledgements section
-$ git add journal.md 
-$ git commit -m "Add acknowledgements" 
-$ git push
+$ git add temperature_conversions.m 
+$ git commit -m "Add K-C conversion trace to graph" 
+$ git push origin master
 ```
 {: .bash}
 
@@ -78,7 +99,7 @@ Now let's change to our other repository and `fetch` the changes from our
 remote repository,
 
 ```    
-$ cd ../laptop_papers		# Switch to the other directory
+$ cd ../laptop_conversions		# Switch to the other directory
 $ git fetch
 ```
 {: .bash}
@@ -105,29 +126,42 @@ $ git merge origin/master
 And then we can check that we have our changes,
 
 ```    
-$ cat journal.md 
+$ cat temperature_conversions.m
 $ git log
 ```
 {: .bash}
 
 As a short-hand, we can do a `git pull` which does a `git fetch` then a `git merge`. 
-Now try the same process, but this time starting in the laptop_papers folder (you
-should already be in the laptop_papers folder), and write an abstract:
+Now try the same process, but this time starting in the `laptop_conversions` folder (you
+should already be in the `laptop_conversions` folder).
+Modify the script as below, to add a Newton-Celsius conversion trace to the graph,
+
+```
+xlabel('Celsius')
+ylabel('Conversion')
+degN = linspace(0, 33, 34);
+plot(newton_to_celsius(degN), degN)
+xlim([0, 100])
+legend('Fahrenheit', 'Kelvin', 'Newton', 'location', 'northwest')
+```
+{: .matlab}
+
+then commit and push the changes:
 
 ```    
-$ gedit journal.md		# Write abstract
-$ git add journal.md 
-$ git commit -m "Write abstract" journal.md 
+$ gedit temperature_conversions.m	# Add code above
+$ git add temperature_conversions.m
+$ git commit -m "Add N-C conversion to graph"
 $ git push origin master
-$ cd ../papers			# Switch back to the papers directory
-$ git pull origin master	# Get changes from remote repository
+$ cd ../conversions			# Switch back to the conversions directory
+$ git pull origin master		# Get changes from remote repository
 ```
 {: .bash}
 
-And then check that we have our changes,
+Now we can check that we have our changes,
 
 ```    
-$ cat journal.md 
+$ cat temperature_conversions.m
 $ git log
 ```
 {: .bash}
@@ -137,9 +171,11 @@ $ git log
 > you ever want to do these steps separately?
 >
 > Well, depending on what the commits on the remote branch contain,
-> you might want to abandon your local commits before merging
+> you might want to:
+> - abandon your local commits before merging
 > (e.g. your local commits duplicate the changes on the remote),
-> rebase your local branch to avoid a merge commit, or something else.
+> - [rebase](https://git-scm.com/docs/git-rebase) your local branch to avoid a merge commit,
+> - do something else.
 >
 > Fetching first lets you inspect the changes
 > before deciding what you want to do with them.
@@ -148,33 +184,55 @@ $ git log
 ### Conflicts and how to resolve them
 
 Let's continue to pretend that our two local, cloned, repositories are hosted
-on two different machines. You should still be in the original *papers* folder.
-Add an affilication for each author.
+on two different machines. You should still be in the original *conversions* folder.
+Modify the H1 line to indicate the script produces a conversion graph, as shown below.
+
+```
+%TEMPERATURE_CONVERSIONS
+% Display graph of temperature conversions between C, F, K, and N.
+% Check temperature conversions between Kelvin, Fahrenheit, Celsius and
+% Newton
+```
+{: .matlab}
 Then push these changes to our remote repository:
 
 ```    
-$ gedit journal.md		# Add author affiliations 
-$ git add journal.md 
-$ git commit -m "Add author affiliations"
+$ git add temperature_conversions.m
+$ git commit -m "Detail graph in H1 line"
 $ git push origin master
 ```
 {: .bash}
 
 Now let us suppose, at a later, date, we use our other repository and we want
-to change the order of the authors.
+to clarify the wording of the help text.
+Currently it says that it checks temperature conversions, but actually,
+it only prints some conversions --- there is no checking that the values are correct.
 
 ```    
-$ cd ../laptop_papers		# Switch directory to other copy of our repository 
-$ gedit journal.md		# Change order of the authors
-$ git add journal.md 
-$ git commit -m "Change the first author" journal.md 
+$ cd ../laptop_conversions		# Switch directory to other copy of our repository 
+```
+{: .bash}
+
+Now edit `temperature_conversions.m` as below
+
+```
+%TEMPERATURE_CONVERSIONS
+% Print key temperature conversions between Kelvin, Fahrenheit, Celsius and
+% Newton
+```
+{: .matlab}
+
+Commit and push your changes.
+```
+$ git add temperature_conversions.m
+$ git commit -m "Clarify script behaviour in H1 line"
 $ git push origin master
 ```
 {: .bash}
 ```
-To https://github.com/<USERNAME>/papers.git
+To https://github.com/<USERNAME>/conversions.git
  ! [rejected]        master -> master (fetch first)
-error: failed to push some refs to 'https://github.com/<USERNAME>/papers.git'
+error: failed to push some refs to 'https://github.com/<USERNAME>/conversions.git'
 hint: Updates were rejected because the remote contains work that you do
 hint: not have locally. This is usually caused by another repository pushing
 hint: to the same ref. You may want to first integrate the remote changes
@@ -194,8 +252,8 @@ $ git pull origin master
 and we get:
 
 ```    
-Auto-merging journal.md
-CONFLICT (content): Merge conflict in journal.md
+Auto-merging temperature_conversions.m
+CONFLICT (content): Merge conflict in temperature_conversions.m
 Automatic merge failed; fix conflicts and then commit the result.
 ```
 {: .output}
@@ -213,35 +271,43 @@ $ git status
 {: .bash}
 
 we can see that our file is listed as *Unmerged* and if we look at
-*journal.md*, we may see something like:
+*temperature_conversions.m*, we see something like:
 
 ```
 <<<<<<< HEAD
-Author
-G Capes, J Smith
+% Print key temperature conversions between Kelvin, Fahrenheit, Celsius and
 =======
-author
-J Smith, G Capes
->>>>>>> 1b55fe7f23a6411f99bf573bfb287937ecb647fc
+% Display graph of temperature conversions between C, F, K, and N.
+% Check temperature conversions between Kelvin, Fahrenheit, Celsius and
+>>>>>>> 11c745bbc1e31eccff832acd0b8b11ab9127fce2
 ```
+{: .matlab}
 
 The mark-up shows us the parts of the file causing the conflict and the
 versions they come from. We now need to manually edit the file to *resolve* the
 conflict. Just like we did when we had to deal with the conflict when we were
 merging the branches.
 
-We edit the file. Then commit our changes. Now, if we *push* ...
+Edit the file as shown below.
 
 ```
-$ gedit journal.md		# Edit file to resolve merge conflict
-$ git add journal.md		# Stage the file
-$ git commit			# Commit to mark the conflict as resolved
+%TEMPERATURE_CONVERSIONS
+% Display graph of temperature conversions between C, F, K, and N.
+% Print key temperature conversions between Kelvin, Fahrenheit, Celsius and
+% Newton
+```
+{: .matlab}
+
+Then commit the changes. Now, if we *push* ...
+
+```
+$ git add temperature_conversions.m	# Stage the file after resolving the conflict
+$ git commit				# Commit to mark the conflict as resolved
 $ git push origin master
 ```
 {: .bash}
-{: .bash}
 
-... all goes well. If we now go to GitHub and click on the "Overview" tab we can
+... all goes well. If we now go to GitHub and click on the **Overview** tab we can
 see where our repository diverged and came together again.
 
 This is where version control proves itself better than DropBox or GoogleDrive,
@@ -291,7 +357,7 @@ between them, so no work is ever lost.
 > Counting objects: 3, done.  remote:
 > Compressing objects: 100% (3/3), done.  remote: Total 3 (delta 0),
 > reused 2 (delta 0) Unpacking objects: 100% (3/3), done.  From
-> https://github.com/apawlik/papers 9e1705a..640210a  master     ->
+> https://github.com/apawlik/conversions 9e1705a..640210a  master     ->
 > origin/master * [new branch]      new_branch -> origin/new_branch
 > ```
 > {: .output}

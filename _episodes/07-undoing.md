@@ -24,22 +24,23 @@ commited in Git.
 ### Discarding local changes
 
 Maybe we made our change just to see how something looks, or to
-quickly try something out. But we may be unhappy with our changes. If we
-haven't get done a `git add` we can just throw the changes away and return
+quickly try something out. But we may be unhappy with our changes.
+Let's try this by deleting all the lines in the `temperature_conversions.m` script,
+and then saving the file.
+We haven't get done a `git add` so we can just throw the changes away and return
 our file to the most recent version we committed to the repository by using:
 
 ```
-$ gedit journal.md		# Make some small edits to the file
-$ git checkout journal.md	# Discard edits we just made
+$ git checkout temperature_conversions.m	# Discard edits we just made
 ```
 {: .bash}
 
-and we can see that our file has reverted to being the most up-to-date one in
-the repository:
+If we now open our file again (in MATLAB or a text editor),
+we can see the contents have been restored to the most up-to-date version in the repository:
 
 ```
-$ git status			# See that we have a clean working directory
-$ gedit journal.md		# Inspect file to verify changes have been discarded
+$ git status					# See that we have a clean working directory
+$ gedit temperature_conversions.m		# Inspect file to verify changes have been discarded
 ```
 {: .bash}
 
@@ -48,88 +49,84 @@ $ gedit journal.md		# Inspect file to verify changes have been discarded
 ### Amending the most recent commit
 
 If you just made a commit and realised that either you did it a bit too early
-and the files are not yet ready to be commited. Or, which is not as uncommon as
-you think, your commit message is not as it is supposed to be. You can fix that
-using the command `$ git commit --amend`
+and the files are not yet ready to be commited,
+or your commit message is not as it is supposed to be,
+you can overwrite the last commit using the command `$ git commit --amend`.
 
 This opens up the default editor for Git which includes the previous commit
 message - you can edit it and close the editor. This will simply fix the commit
 message.
 
-But what if we forgot to include some files in the commit?
+But what if we want to change the contents of the commit
+(maybe we want to edit our last set of changes,
+or forgot to include some files in the commit)?
 
-Let's try it on our example. First, let's modify two files: our paper file and
-the references file. We will add a methodology section to the paper where we
-detail the instrumentation used, and add a reference for this to the references
-file.
+Let's try it on our example. First, we'll add a comment above our conversions,
+but with a typo:
 
 ```
-$ gedit journal.md		# Add methodology section, including a reference
-$ gedit common/references.txt	# Add new reference to references file
-$ git status			# Get a status update on file modifications
+...
+% Save degree symbol as a variable
+deg = char(176);
+
+% Check some key conversion
+disp(['Water boils at 100', deg, 'C, which is ', num2str(celsius_to_fahrenheit(100)), deg, 'F.'])
+...
 ```
-{: .output}
-{: .bash}
+{: .matlab}
 	
-```
-$ On branch master 
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-	modified:   common/references.txt
-	modified:   journal.md
-
-no changes added to commit (use "git add" and/or "git commit -a")
-```
-{: .output}
-
-Let's then add and commit *journal.md* but not the references file.
+Let's then add and commit `temperature_conversions.m`.
 
 ```
-$ git add journal.md		 # Add journal to staging area
-$ git commit -m "Add methodology section"
+$ git add temperature_conversions.m
+$ git commit -m "Comment key conversions section"
 ```
 {: .bash}
 	
-Let's have a look at our working directory now:
+
+Run `git log -3 --oneline` and look at the latest commit message and ID.
 
 ```
-$ git status
-```
-{: .bash}
-```
-$ On branch master 
-Changes not staged for commit: 
-  (use "git add <file>..." to update what will be committed) 
-  (use "git checkout --	<file>..." to discard changes in working directory)
-
-	modified:   common/references.txt
-
-no changes added to commit (use "git add" and/or "git commit -a")
+9a2036b Comment key conversions section
+0377892 Merge branch 'newton'
+39ba929 Add help text for script
 ```
 {: .output}
 
-Also, run `git log -2` to see what is the latest commit message and ID.
-
-Now, we want to fix our commit and add the references file.
+Now, we want to fix our commit by correcting the typo.
+The corrected line should be as follows:
 
 ```
-$ git add common/references.txt	# Add reference file
-$ git commit --amend		# Amend most recent commit
+% Check some key temperature converisons
+```
+{: .matlab}
+
+Correct the typo, then stage the file
+
+```
+$ git add temperature_conversions.m	# Add reference file
+$ git commit --amend			# Amend most recent commit
 ```
 {: .bash}
 
 This will again bring up the editor and we can amend the commit message if required.
 
 Now when we run `git status` and then `git log` we can see that our Working
-Directory is clean and that both files were added. 
+Directory is clean and that the most recent commit ID has changed
+because of the new contents of the commit.
 
 ```
 $ git status
-$ git log -3
+$ git log -3 --oneline
 ```
 {: .bash}
+
+```
+3dd68cc Comment key conversions section
+0377892 Merge branch 'newton'
+39ba929 Add help text for script
+```
+{: .output}
 
 ---
 
@@ -139,21 +136,9 @@ $ git log -3
 than deleting the commit from history, git works out how to undo those changes
 introduced by the commit, and appends a new commit with the resulting content.
 
-Let's try it on our example. Modify the journal, describing which other instruments were
-used, and then make a commit.
+Let's try it on our example.
+We change our mind and decide that the last comment wasn't really required.
 
-```
-$ gedit journal.md		# Describe other instruments
-$ git add journal.md
-$ git commit -m "Describe Aerosol Mass Spectrometer"
-```
-{: .bash}
-
-We now realise that what we've just done in our journal file is incorrect
-because we are not using the data from that instrument.
-Some of the data got corrupted, and due to problems with the logging computer
-we are not going to use that data.
-So it makes sense to abandon the commit completely.
 
 ```	
 $ git revert HEAD		# Undo changes introduced by most recent commit
@@ -190,13 +175,13 @@ history.
 `git reset` has several uses, and is most often used to unstage files from the staging
 area i.e. `git reset` or `git reset <file>`.
 
-We are going to use a variant `git reset --hard <commit>` to reset things to how 
-they were at `<commit>`. This is a permanent undo which deletes all changes more recent
-than `<commit>` from your history. There is clearly potential here to lose work, so use
+We are going to use a variant `git reset --hard COMMIT_ID` to restore things to how 
+they were at `COMMIT_ID`. This is a permanent undo which deletes all changes more recent
+than `COMMIT_ID` from your history. There is clearly potential here to lose work, so use
 this command with care.
 
-Let's try that on our paper, using the same example as before. Now we have two commits
-which we want to abandon: the commit outlining the unreliable instrumentation, and
+Let's try that on our script, using the same example as before. Now we have two commits
+which we want to abandon: the commit adding a comment, and
 the subsequent revert commit. We can achieve this by resetting to the last
 commit we want to keep.
 
@@ -207,7 +192,8 @@ $ git reset --hard HEAD^^	# Move tip of branch to two commits before HEAD
 ```
 {: .bash}
 ```
-HEAD is now at fbdc44b Add methodology section and update references file
+HEAD is now at 0377892 Merge branch 'newton'
+
 ```
 {: .output}
 
@@ -217,7 +203,9 @@ branch we currently are working on (master). (`HEAD^` = the commit right before 
 `HEAD^^` = two commits before HEAD)
 
 The final effect is what we need: we abandoned the commits and we are now back
-to where we were before making the commit about the data we are not using.
+to where we were before making the commit with the comment we are not keeping.
+
+Feel free to verify this by checking the contents of the `temperature_conversions.m` file.
 
 ---
 Click for an [animation] of the revert and reset operations we just used.

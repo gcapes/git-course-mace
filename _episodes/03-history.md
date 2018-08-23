@@ -1,7 +1,7 @@
 ---
 title: "Looking at history and differences"
 teaching: 30
-exercises: 15 (inc 10 for break)
+exercises: 5
 questions:
 - "How do I get started with Git?"
 - "Where does Git store information?"
@@ -20,13 +20,21 @@ keypoints:
 
 ### Looking at differences
 
-We forgot to reference a second paper in the introduction section.
-Correct it, save the file but do not commit it yet.
+We've printed a couple of key values using our script,
+but what about the Kelvin scale?
+We've not even mentioned it!
+Add a line to display 0K in degrees C and save the script,
+but do not commit it yet.
+
+~~~
+fprintf('Absolute zero is 0K, which is %g%sC.\n', kelvin_to_celsius(0), deg)
+~~~
+{: .matlab}
+
 We can review the changes that we made using:
 
 ~~~
-$ gedit journal.md		# Add second reference to introduction
-$ git diff journal.md		# View changes to file
+$ git diff temperature_conversions.m		# View changes to file
 ~~~
 {: .bash}
 
@@ -52,16 +60,11 @@ view](https://help.github.com/articles/comparing-commits-across-time)
 
 Git can be configured to use graphical diff tools, and this is functionality
 is accessed using `git difftool` in place of `git diff`.
-Configuring a visual diff tool is covered on the
-[hints and tips](11-hints-and-tips.html) page.
-The choice of GUI for viewing differences depends on the context in which you
-are working and your own preferences related to choosing tools and
-technologies.
 
-Now commit the change we made by adding the second reference:
+Now commit the change to our script `temperature_conversions.m`:
 ```
-$ git add journal.md
-$ git commit			# "Reference second paper in introduction"
+$ git add temperature_conversions.m
+$ git commit			# "Include Kelvin conversion"
 ```
 {: .bash}
 
@@ -76,17 +79,35 @@ $ git log
 {: .bash}
 
 ```
-commit 4dd7f5c948fdc11814041927e2c419283f5fe84c
+commit b7461bff372728da9829b3f3dd4fb1e70b9fc4bb
 Author: Your Name <your.name@manchester.ac.uk>
-Date:   Mon Jun 26 10:21:48 2017 +0100
+Date:   Mon Jul 30 09:15:37 2018 +0100
 
-    Write introduction
+    Include Kelvin conversion
 
-commit c38d2243df9ad41eec57678841d462af93a2d4a5
+commit 6fa25fa6a6ff9ecdc8be1042f552192ca7befc21
+Date:   Mon Jul 30 09:14:30 2018 +0100
+
+    Add script to print key conversions
+
+commit 7e795dca7105a78a8b4d446b653996518e1a06d7
 Author: Your Name <your.name@manchester.ac.uk>
-Date:   Mon Jun 26 10:14:30 2017 +0100
+Date:   Mon Jul 30 09:12:41 2018 +0100
 
-    Add author and title
+    Add functions to convert between C and F
+
+commit 414c8445efeecade38e2abf6181aa97e21a785ec
+Author: Your Name <your.name@manchester.ac.uk>
+Date:   Mon Jul 30 09:11:34 2018 +0100
+
+    Add help text
+
+commit 25f55bf57e767edb54303fac10b88cc6f69c945a
+Author: Your Name <your.name@manchester.ac.uk>
+Date:   Mon Jul 30 09:10:15 2018 +0100
+
+    Add Kelvin to Celsius conversion
+
 ```
 {: .output}
 
@@ -129,7 +150,7 @@ $ git checkout INITIAL_COMMITID
 We will get something like this:
 
 ~~~
-Note: checking out '21cfbdec'.
+Note: checking out '25f55bf5'.
 
 You are in 'detached HEAD' state. You can look around, make experimental
 changes and commit them, and you can discard any commits you make in this
@@ -140,14 +161,14 @@ do so (now or later) by using -b with the checkout command again. Example:
 
   git checkout -b new_branch_name
   
-HEAD is now at 21cfbde... Add title and authors
+HEAD is now at 25f55bf... Add Kelvin to Celsius conversion
 ~~~
 {: .output}
 
 This strange concept of the 'detached HEAD' is covered in the next section ...
 just bear with me for now!
 
-If we look at `journal.md` we'll see it's our very first version. And if we
+If we look at `kelvin_to_celsius.m` we'll see it's our very first version. And if we
 look at our directory,
 
 ~~~
@@ -155,12 +176,12 @@ $ ls
 ~~~
 {: .bash}
 ~~~
-journal.md
+kelvin_to_celsius.m
 ~~~
 {: .output}
 
-then we see that our `common` directory is gone. But, rest easy, while it's
-gone from our working directory, it's still in our repository. We can jump back
+then we see that our other files are missing. But, rest easy, while they're
+gone from our working directory, they're still in our repository. We can jump back
 to the latest commit by doing:
 
 ~~~
@@ -168,14 +189,14 @@ $ git checkout master
 ~~~
 {: .bash}
 
-And `common` will be there once more,
+And all our files will be there once more,
 
 ~~~
 $ ls
 ~~~
 {: .bash}
 ~~~
-common journal.md
+celsius_to_fahrenheit.m  fahrenheit_to_celsius.m  kelvin_to_celsius.m  temperature_conversions.m
 ~~~
 {: .output}
 So we can get any version of our files from any point in time. In other words,
@@ -219,10 +240,11 @@ $ git log --graph --decorate --oneline
 {: .bash}
 
 ```
-* 6a48241 (HEAD, master) Reference second paper in introduction
-* ed26351 Reference Allen et al in introduction
-* 7446b1d Write introduction
-* 4f572d5 Add title and authors
+* b7461bf (HEAD -> master) Include Kelvin conversion
+* 6fa25fa Add script to print key conversions
+* 7e795dc Add functions to convert between C and F
+* 414c844 Add help text
+* 25f55bf Add Kelvin to Celsius conversion
 ```
 {: .output}
 
@@ -238,10 +260,11 @@ $ git log --graph --decorate --oneline --all
 {: .bash}
 
 ```
-* 6a48241 (master) Reference second paper in introduction
-* ed26351 (HEAD) Reference Allen et al in introduction
-* 7446b1d Write introduction
-* 4f572d5 Add title and authors
+* b7461bf (master) Include Kelvin conversion
+* 6fa25fa (HEAD) Add script to print key conversions
+* 7e795dc Add functions to convert between C and F
+* 414c844 Add help text
+* 25f55bf Add Kelvin to Celsius conversion
 ```
 {: .output}
 
@@ -261,7 +284,7 @@ act as easy-to-remember nicknames for commit identifiers.
 For example,
 
 ```    
-$ git tag PAPER_STUB
+$ git tag INITIAL_SCRIPT
 ```
 {: .bash}
 
@@ -272,12 +295,16 @@ $ git tag
 ```
 {: .bash}
 
-Now add the second paper to references.txt and commit the change:
+Now add a line to the script to display 0K in Fahrenheit, then commit the change:
 
-```    
-$ gedit common/references.txt	# Add second paper
-$ git add common/references.txt 
-$ git commit -m "Add Jones et al paper" common/references.txt
+```
+fprintf('Absolute zero is %g%sF.\n', celsius_to_fahrenheit(kelvin_to_celsius(0)), deg) 
+```
+{: .matlab}
+
+```
+$ git add temperature_conversions.m
+$ git commit temperature_conversions.m -m "Print 0K in Fahrenhit" 
 ```
 {: .bash}
 
@@ -285,7 +312,7 @@ We can checkout our previous version using our tag instead of a commit
 identifier.
 
 ```    
-$ git checkout PAPER_STUB
+$ git checkout INITIAL_SCRIPT
 ```
 {: .bash}
 
@@ -313,7 +340,7 @@ $ git checkout master
 > ## Exercise: "bio" Repository 
 >
 > - Create a new Git repository on your computer called "bio"
-> - Be sure not to create your new repo within the 'papers' repo (see above)
+> - Be sure not to create your new repo within the 'conversions' repo (see above)
 > - Write a three-line biography for yourself in a file called **me.txt**
 > - Commit your changes
 > - Modify one line, add a fourth line, then save the file
@@ -322,7 +349,7 @@ $ git checkout master
 > You may wish to use the faded example below as a guide
 >
 > ```
-> cd ..                # Navigate out of the papers directory
+> cd ..                # Navigate out of the conversions directory
 >                      # Avoid creating a repo within a repo - confusion will arise!
 > mkdir ___            # Create a new directory called 'bio'
 > cd ___               # Navigate into the new directory
@@ -338,7 +365,7 @@ $ git checkout master
 > > ## Solution
 > >
 > > ```
-> > cd ..                # Navigate out of the papers directory
+> > cd ..                # Navigate out of the conversions directory
 > >                      # Avoid creating a repo within a repo - confusion will arise!
 > > mkdir bio            # Create a new directory
 > > cd bio               # Navigate into the new directory

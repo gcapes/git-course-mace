@@ -52,7 +52,6 @@ this approach also means there's no risk of the auto-generated files becoming
 out of sync with the manual ones.
 
 We can automatically ignore such files using a `.gitignore` file.
-See [hints and tips]({{page.root}}/12-hints-and-tips).
 
 ---
 
@@ -72,7 +71,7 @@ See [hints and tips]({{page.root}}/12-hints-and-tips).
 	- Break your code changes into small, but working chunks.
 	- If you need to temporarily save some work-in-progress
 	  (e.g. in order to work in another branch),
-	  use `git stash` -- see [hints and tips]({{page.root}}/12-hints-and-tips).
+	  use `git stash`
 - Commit related changes.
 	- Confine your commit to directly related changes.
 	  If you fix two separate bugs, you should have two separate commits.
