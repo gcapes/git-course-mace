@@ -33,7 +33,7 @@ our file to the most recent version we committed to the repository by using:
 ```
 $ git checkout temperature_conversions.m	# Discard edits we just made
 ```
-{: .bash}
+{: .language-bash}
 
 If we now open our file again (in MATLAB or a text editor),
 we can see the contents have been restored to the most up-to-date version in the repository:
@@ -42,7 +42,7 @@ we can see the contents have been restored to the most up-to-date version in the
 $ git status					# See that we have a clean working directory
 $ notepad temperature_conversions.m		# Inspect file to verify changes have been discarded
 ```
-{: .bash}
+{: .language-bash}
 
 ---
 
@@ -73,7 +73,7 @@ deg = char(176);
 disp(['Water boils at 100', deg, 'C, which is ', num2str(celsius_to_fahrenheit(100)), deg, 'F.'])
 ...
 ```
-{: .matlab}
+{: .language-matlab}
 	
 Let's then add and commit `temperature_conversions.m`.
 
@@ -81,7 +81,7 @@ Let's then add and commit `temperature_conversions.m`.
 $ git add temperature_conversions.m
 $ git commit -m "Comment key conversions section"
 ```
-{: .bash}
+{: .language-bash}
 	
 
 Run `git log -3 --oneline` and look at the latest commit message and ID.
@@ -99,7 +99,7 @@ The corrected line should be as follows:
 ```
 % Check some key temperature converisons
 ```
-{: .matlab}
+{: .language-matlab}
 
 Correct the typo, then stage the file
 
@@ -107,7 +107,7 @@ Correct the typo, then stage the file
 $ git add temperature_conversions.m	# Add reference file
 $ git commit --amend			# Amend most recent commit
 ```
-{: .bash}
+{: .language-bash}
 
 This will again bring up the editor and we can amend the commit message if required.
 
@@ -119,7 +119,7 @@ because of the new contents of the commit.
 $ git status
 $ git log -3 --oneline
 ```
-{: .bash}
+{: .language-bash}
 
 ```
 3dd68cc Comment key conversions section
@@ -143,7 +143,7 @@ We change our mind and decide that the last comment wasn't really required.
 ```	
 $ git revert HEAD		# Undo changes introduced by most recent commit
 ```
-{: .bash}
+{: .language-bash}
 
 When we revert, a new commit is created. The *HEAD* pointer and the branch
 pointer are in fact moved forward rather than backwards. 	
@@ -190,7 +190,7 @@ We can do that by running:
 ```
 $ git reset --hard HEAD^^	# Move tip of branch to two commits before HEAD
 ```
-{: .bash}
+{: .language-bash}
 ```
 HEAD is now at 0377892 Merge branch 'newton'
 

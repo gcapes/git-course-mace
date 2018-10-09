@@ -22,7 +22,7 @@ You might have noticed the term *branch* in status messages:
 ~~~
 $ git status 
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 On branch master 
 nothing to commit (working directory clean)
@@ -85,7 +85,7 @@ We're just trying out this idea, so we'll create a new branch to work in.
 ~~~
 $ git checkout -b newton
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 Switched to a new branch 'newton'
 ~~~
@@ -99,7 +99,7 @@ on the right branch.
 ~~~
 $ git branch			# Double check which branch we are working on
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
   master
 * newton
@@ -117,7 +117,7 @@ function celsius = newton_to_celsius(newton)
     celsius = 100/33 * newton;
 end
 ```
-{: .matlab}
+{: .language-matlab}
 
 ```
 %TEMPERATURE_CONVERSIONS
@@ -134,20 +134,20 @@ fprintf('Absolute zero is %g%sF.\n', celsius_to_fahrenheit(kelvin_to_celsius(0))
 
 fprintf('33 %sN is %g%sC.\n', deg, newton_to_celsius(33), deg)
 ```
-{: .matlab}
+{: .language-matlab}
 
 ~~~
 $ git add temperature_conversions.m newton_to_celsius.m
 $ git commit			# "Add Newton to Celsius conversion"
 ~~~
-{: .bash}
+{: .language-bash}
 
 If we now want to work in our `master` branch. We can switch back by using:
 
 ~~~
 $ git checkout master 
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 Switched to branch 'master'
 ~~~
@@ -161,13 +161,13 @@ The script on this branch doesn't have any help text, so let's fix that.
 
 ...
 ```
-{: .matlab}
+{: .language-matlab}
 
 ~~~
 $ git add temperature_conversions.m
 $ git commit			# "Add help text for script"
 ~~~
-{: .bash}
+{: .language-bash}
 
 ### Merging and resolving conflicts
 
@@ -181,7 +181,7 @@ on our two branches:
 ```
 git log --graph --all --oneline --decorate
 ```
-{: .bash}
+{: .language-bash}
 
 ```
 * 39ba929 (HEAD -> master) Add help text for script
@@ -205,7 +205,7 @@ doing that:
 $ git checkout master		# Switch branch
 $ git merge newton		# Merge newton into master
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 Auto-merging temperature_conversions.m
 CONFLICT (content): Merge conflict in temperature_conversions.m
@@ -221,7 +221,7 @@ some more detail
 ~~~
 $ git status
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 On branch master
 You have unmerged paths.
@@ -273,7 +273,7 @@ Let's edit the file to keep the version from the *newton* branch:
 
 % Save degree symbol as a variable
 ```
-{: .matlab}
+{: .language-matlab}
 
 Then commit our changes:
 
@@ -282,7 +282,7 @@ $ git add temperature_conversions.m		# Let Git know we have resolved the conflic
 $ git commit					# Git has already written a commit message for us:
 						# 'Merge branch 'newton'
 ~~~
-{: .bash}
+{: .language-bash}
 
 This is where version control proves itself better than DropBox or GoogleDrive,
 this ability to merge text files line-by-line and highlight the conflicts
@@ -293,7 +293,7 @@ We can see the two branches merged if we take another look at the log graph:
 ```
 $ git log --graph --decorate --all --oneline
 ```
-{: .bash}
+{: .language-bash}
 
 ```
 *   0377892 (HEAD -> master) Merge branch 'newton'
@@ -331,7 +331,7 @@ but we were then in the "detached HEAD" state.
 > > git branch 				# You should see a message like the one below,
 > > 					# indicating your commit does not belong to a branch
 > > ```
-> > {: .bash}
+> > {: .language-bash}
 > > ```
 > > * (HEAD detached from 39ba929)
 > >   master
@@ -356,7 +356,7 @@ but we were then in the "detached HEAD" state.
 > > ```
 > > git checkout master
 > > ```
-> > {: .bash}
+> > {: .language-bash}
 > > Git will warn you that you are leaving behind changes that would be lost:
 > >
 > > The output you see will be slightly different to that below,
@@ -407,7 +407,7 @@ but we were then in the "detached HEAD" state.
 > > git commit -a				# Commit all the modified files
 > > git branch				# List local branches
 > > ```
-> > {: .bash}
+> > {: .language-bash}
 > >
 > > ```
 > > * (HEAD detached from db7d69f)
@@ -420,7 +420,7 @@ but we were then in the "detached HEAD" state.
 > > git branch dh-exercise			# Create a new branch
 > > git checkout dh-exercise		# Switch to the new branch 
 > > ```
-> > {: .bash}
+> > {: .language-bash}
 > > ```
 > > Switched to a new branch 'dh-exericise'
 > > ```
@@ -428,7 +428,7 @@ but we were then in the "detached HEAD" state.
 > > ```
 > > git branch				# View local branches
 > > ```
-> > {: .bash}
+> > {: .language-bash}
 > > ```
 > > * dh-exericise
 > >  master
@@ -440,7 +440,7 @@ but we were then in the "detached HEAD" state.
 > > ```
 > > git checkout master			# Switch back to the 'master' branch
 > > ```
-> > {: .bash}
+> > {: .language-bash}
 > > See this [new branch animation] for the key points in this exercise.
 > {: .solution}
 {: .challenge}

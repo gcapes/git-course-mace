@@ -50,7 +50,7 @@ who we are (note that you need to enclose your name in quote marks):
 $ git config --global user.name "Your Name" 			# Put your quote marks around your name
 $ git config --global user.email yourname@yourplace.org
 ~~~
-{: .bash}
+{: .language-bash}
 
 ## Set a default editor
 
@@ -66,7 +66,7 @@ session we'll use *notepad*:
 $ git config --global core.editor notepad				# Windows users only.
 								# Linux users should use gedit: see below.
 ~~~
-{: .bash}
+{: .language-bash}
 
 To set up alternative editors, follow the same notation e.g.
 `git config --global core.editor gedit`, `git config --global core.editor vi`,
@@ -83,7 +83,7 @@ $ cat ~/.gitconfig
     [user] name = Your Name email = yourname@yourplace.org
     [core] editor = notepad
 ~~~
-{: .bash}
+{: .language-bash}
 
 **These global configuration settings will apply to any new Git repository
 you create on your computer.**
@@ -105,7 +105,7 @@ $ pwd								# Print working directory (output should be /home/<username>)
 $ mkdir conversions 
 $ cd conversions
 ```	
-{: .bash}
+{: .language-bash}
 
 Now, we need to set up this directory up to be a Git repository (or "initiate
 the repository"):
@@ -113,7 +113,7 @@ the repository"):
 ~~~
 $ git init 
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 Initialized empty Git repository in /home/user/conversions/.git/
 ~~~
@@ -126,7 +126,7 @@ The directory *conversions* is now our working directory.
 ~~~
 $ ls .git
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 branches  config  description  HEAD  hooks  info  objects refs
 ~~~
@@ -144,7 +144,7 @@ We can either create a new file from the Git prompt
 ```
 notepad kelvin_to_celsius.m
 ```
-{: .bash}
+{: .language-bash}
 
 or we can create the file from within MATLAB.
 Just be sure to save it to the working directory --- recall that we can
@@ -153,7 +153,7 @@ return the current directory using the following command:
 ```
 pwd
 ```
-{: .bash}
+{: .language-bash}
 
 Create the file with the following contents:
 
@@ -162,7 +162,7 @@ function celsius = kelvin_to_celsius(kelvin)
     celsius = kelvin - 273.15
 end
 ```
-{: .matlab}
+{: .language-matlab}
 
 
 `git status` allows us to find out about the current status
@@ -171,7 +171,7 @@ of files in the repository. So we can run,
 ~~~
 $ git status
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 On branch master
 
@@ -203,7 +203,7 @@ To tell Git about the file, we will use the `git add` command:
 $ git add kelvin_to_celsius.m 
 $ git status 
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 On branch master
 
@@ -238,7 +238,7 @@ $ git commit
 	# Now type a commit message: 'Add kelvin to celsius conversion'
 	# Save the commit message and close your text editor (notepad etc.)
 ~~~
-{: .bash}
+{: .language-bash}
 
 Our default editor will now pop up. Why? Well, Git can automatically figure out
 that directories and files are committed, and by whom (thanks to the information
@@ -264,7 +264,7 @@ commited those previously staged changes:
 ~~~
 $ git status
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 On branch master
 nothing to commit, working directory clean
@@ -284,14 +284,14 @@ function celsius = kelvin_to_celsius(kelvin)
     celsius = kelvin - 273.15
 end
 ```
-{: .matlab}
+{: .language-matlab}
 
 If we now run,
 
 ~~~
 $ git status
 ~~~
-{: .bash}
+{: .language-bash}
 
 we see a *changes not staged for commit* section and our file is marked as
 modified: 
@@ -316,7 +316,7 @@ commit the changes:
 $ git add kelvin_to_celsius.m
 $ git commit							# "Add help text"
 ~~~
-{: .bash}
+{: .language-bash}
 
 Note that in this case we used `git add` to put *kelvin_to_celsius.m* in the staging
 area. Git already knows this file should be tracked but doesn't know if we want
@@ -341,7 +341,7 @@ function celsius = fahrenheit_to_celsius(fahrenheit)
     celsius = (fahrenheit-32) * (5/9);
 end
 ```
-{: .matlab}
+{: .language-matlab}
 
 and `celsius_to_fahrenheit.m`
 
@@ -352,7 +352,7 @@ function fahrenheit = celsius_to_fahrenheit(celsius)
     fahrenheit = celsius*(9/5) + 32;
 end
 ```
-{: .matlab}
+{: .language-matlab}
 
 Now add both the files to the staging area,
 and make a commit:
@@ -361,7 +361,7 @@ and make a commit:
 $ git add celsius_to_fahrenheit.m fahrenheit_to_celsius.m
 $ git commit -m 'Add functions to convert between C and F
 ```
-{: .bash}
+{: .language-bash}
 
 ![The Git commit workflow](../fig/git-committing.svg)
 
@@ -377,7 +377,7 @@ deg = char(176);
 disp(['Water boils at 100', deg, 'C, which is ', num2str(celsius_to_fahrenheit(100)), deg, 'F.'])
 fprintf('Water freezes at %g%sC, which is %g%sF.\n', fahrenheit_to_celsius(32), deg, 32, deg)
 ```
-{: .matlab}
+{: .language-matlab}
 
 Then we'll commit the script:
 
@@ -386,4 +386,4 @@ $ git add temperature_conversions.m
 $ git commit
 	# Commit message: 'Add script to print key conversions'
 ```
-{: .bash}
+{: .language-bash}

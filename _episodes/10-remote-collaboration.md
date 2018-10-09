@@ -31,7 +31,7 @@ First, let us leave our current local repository,
 $ cd ..  
 $ ls
 ```
-{: .bash}
+{: .language-bash}
 
 ```
 $ conversions
@@ -45,7 +45,7 @@ directory name,
 $ git clone https://github.com/<USERNAME>/conversions.git laptop_conversions 
 Cloning into 'laptop_conversions'...
 ```
-{: .bash}
+{: .language-bash}
 
 
 So we now have two clones of our repository,
@@ -53,7 +53,7 @@ So we now have two clones of our repository,
 ```
 $ ls
 ```
-{: .bash}
+{: .language-bash}
 
 ```
 $ conversions laptop_conversions
@@ -69,7 +69,7 @@ commit the file and push these changes to GitHub.
 ```
 $ cd conversions		# Change current directory
 ```
-{: .bash}
+{: .language-bash}
 
 Modify the script from the `conversions` directory so that the final section is as below:
 
@@ -84,7 +84,7 @@ xlabel('Celsius')
 ylabel('Conversion')
 legend('Fahrenheit', 'Kelvin', 'location', 'northwest')
 ```
-{: .matlab}
+{: .language-matlab}
 
 Now commit the file and push:
 
@@ -93,7 +93,7 @@ $ git add temperature_conversions.m
 $ git commit -m "Add K-C conversion trace to graph" 
 $ git push origin master
 ```
-{: .bash}
+{: .language-bash}
 
 Now let's change to our other repository and `fetch` the changes from our
 remote repository,
@@ -102,14 +102,14 @@ remote repository,
 $ cd ../laptop_conversions		# Switch to the other directory
 $ git fetch
 ```
-{: .bash}
+{: .language-bash}
 
 We can now see what the differences are by doing,
 
 ```    
 $ git diff origin/master
 ```
-{: .bash}
+{: .language-bash}
 
 which compares our current, `master` branch, with an `origin/master` branch
 which is the name of the `master` branch in `origin` which is the alias for our
@@ -121,7 +121,7 @@ branches together,
 ```    
 $ git merge origin/master
 ```
-{: .bash}
+{: .language-bash}
 
 And then we can check that we have our changes,
 
@@ -129,7 +129,7 @@ And then we can check that we have our changes,
 $ cat temperature_conversions.m
 $ git log
 ```
-{: .bash}
+{: .language-bash}
 
 As a short-hand, we can do a `git pull` which does a `git fetch` then a `git merge`. 
 Now try the same process, but this time starting in the `laptop_conversions` folder (you
@@ -144,7 +144,7 @@ plot(newton_to_celsius(degN), degN)
 xlim([0, 100])
 legend('Fahrenheit', 'Kelvin', 'Newton', 'location', 'northwest')
 ```
-{: .matlab}
+{: .language-matlab}
 
 then commit and push the changes:
 
@@ -156,7 +156,7 @@ $ git push origin master
 $ cd ../conversions			# Switch back to the conversions directory
 $ git pull origin master		# Get changes from remote repository
 ```
-{: .bash}
+{: .language-bash}
 
 Now we can check that we have our changes,
 
@@ -164,7 +164,7 @@ Now we can check that we have our changes,
 $ cat temperature_conversions.m
 $ git log
 ```
-{: .bash}
+{: .language-bash}
 
 > ## `Fetch` vs `pull`
 > If `git pull` is a shortcut for `git fetch` followed by `git merge` then, why would
@@ -193,7 +193,7 @@ Modify the H1 line to indicate the script produces a conversion graph, as shown 
 % Check temperature conversions between Kelvin, Fahrenheit, Celsius and
 % Newton
 ```
-{: .matlab}
+{: .language-matlab}
 Then push these changes to our remote repository:
 
 ```    
@@ -201,7 +201,7 @@ $ git add temperature_conversions.m
 $ git commit -m "Detail graph in H1 line"
 $ git push origin master
 ```
-{: .bash}
+{: .language-bash}
 
 Now let us suppose, at a later, date, we use our other repository and we want
 to clarify the wording of the help text.
@@ -211,7 +211,7 @@ it only prints some conversions --- there is no checking that the values are cor
 ```    
 $ cd ../laptop_conversions		# Switch directory to other copy of our repository 
 ```
-{: .bash}
+{: .language-bash}
 
 Now edit `temperature_conversions.m` as below
 
@@ -220,7 +220,7 @@ Now edit `temperature_conversions.m` as below
 % Print key temperature conversions between Kelvin, Fahrenheit, Celsius and
 % Newton
 ```
-{: .matlab}
+{: .language-matlab}
 
 Commit and push your changes.
 ```
@@ -228,7 +228,7 @@ $ git add temperature_conversions.m
 $ git commit -m "Clarify script behaviour in H1 line"
 $ git push origin master
 ```
-{: .bash}
+{: .language-bash}
 ```
 To https://github.com/<USERNAME>/conversions.git
  ! [rejected]        master -> master (fetch first)
@@ -247,7 +247,7 @@ repository. Before pushing we should always pull, so let's do that...
 ```    
 $ git pull origin master
 ```
-{: .bash}
+{: .language-bash}
 
 and we get:
 
@@ -268,7 +268,7 @@ we look at the status,
 ```
 $ git status
 ```
-{: .bash}
+{: .language-bash}
 
 we can see that our file is listed as *Unmerged* and if we look at
 *temperature_conversions.m*, we see something like:
@@ -281,7 +281,7 @@ we can see that our file is listed as *Unmerged* and if we look at
 % Check temperature conversions between Kelvin, Fahrenheit, Celsius and
 >>>>>>> 11c745bbc1e31eccff832acd0b8b11ab9127fce2
 ```
-{: .matlab}
+{: .language-matlab}
 
 The mark-up shows us the parts of the file causing the conflict and the
 versions they come from. We now need to manually edit the file to *resolve* the
@@ -296,7 +296,7 @@ Edit the file as shown below.
 % Print key temperature conversions between Kelvin, Fahrenheit, Celsius and
 % Newton
 ```
-{: .matlab}
+{: .language-matlab}
 
 Then commit the changes. Now, if we *push* ...
 
@@ -305,7 +305,7 @@ $ git add temperature_conversions.m	# Stage the file after resolving the conflic
 $ git commit				# Commit to mark the conflict as resolved
 $ git push origin master
 ```
-{: .bash}
+{: .language-bash}
 
 ... all goes well. If we now go to GitHub and click on the **Overview** tab we can
 see where our repository diverged and came together again.
@@ -341,7 +341,7 @@ between them, so no work is ever lost.
 > ```
 > $ git push origin new_branch		# Substitute your local branch name for 'new_branch'.
 > ```
-> {: .bash}
+> {: .language-bash}
 > 
 > The other person should try to get local copies of the branches created by others
 > (so eventually everybody should have the same number of branches as the remote
@@ -352,7 +352,7 @@ between them, so no work is ever lost.
 > ```
 > $ git fetch origin 
 > ```
-> {: .bash}
+> {: .language-bash}
 > ```
 > Counting objects: 3, done.  remote:
 > Compressing objects: 100% (3/3), done.  remote: Total 3 (delta 0),
@@ -371,7 +371,7 @@ between them, so no work is ever lost.
 > ```
 > $ git checkout new_branch
 > ```
-> {: .bash}
+> {: .language-bash}
 > ```
 > Branch new_branch set up to track remote branch new_branch from origin.
 > Switched to a new branch 'new_branch'

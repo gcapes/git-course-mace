@@ -29,14 +29,14 @@ but do not commit it yet.
 ~~~
 fprintf('Absolute zero is 0K, which is %g%sC.\n', kelvin_to_celsius(0), deg)
 ~~~
-{: .matlab}
+{: .language-matlab}
 
 We can review the changes that we made using:
 
 ~~~
 $ git diff temperature_conversions.m		# View changes to file
 ~~~
-{: .bash}
+{: .language-bash}
 
 This shows the difference between the latest copy in the repository and the
 unstaged changes we have made.
@@ -66,7 +66,7 @@ Now commit the change to our script `temperature_conversions.m`:
 $ git add temperature_conversions.m
 $ git commit			# "Include Kelvin conversion"
 ```
-{: .bash}
+{: .language-bash}
 
 ### Looking at our history
 
@@ -76,7 +76,7 @@ changes will be displayed at the top):
 ~~~
 $ git log
 ~~~
-{: .bash}
+{: .language-bash}
 
 ```
 commit b7461bff372728da9829b3f3dd4fb1e70b9fc4bb
@@ -128,14 +128,14 @@ earlier commit:
 ~~~
 $ git diff COMMITID		# View differences between current version and COMMITID
 ~~~
-{: .bash}
+{: .language-bash}
 
 And, to see changes between two commits:
 
 ~~~
 $ git diff OLDER_COMMITID NEWER_COMMITID
 ~~~
-{: .bash}
+{: .language-bash}
 
 Using our commit identifiers we can set our working directory to contain the
 state of the repository as it was at any commit. So, let's go back to the very
@@ -145,7 +145,7 @@ first commit we made,
 $ git log 
 $ git checkout INITIAL_COMMITID
 ~~~
-{: .bash}
+{: .language-bash}
 
 We will get something like this:
 
@@ -174,7 +174,7 @@ look at our directory,
 ~~~
 $ ls
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 kelvin_to_celsius.m
 ~~~
@@ -187,14 +187,14 @@ to the latest commit by doing:
 ~~~
 $ git checkout master
 ~~~
-{: .bash}
+{: .language-bash}
 
 And all our files will be there once more,
 
 ~~~
 $ ls
 ~~~
-{: .bash}
+{: .language-bash}
 ~~~
 celsius_to_fahrenheit.m  fahrenheit_to_celsius.m  kelvin_to_celsius.m  temperature_conversions.m
 ~~~
@@ -237,7 +237,7 @@ and decorate those commits corresponding to Git references (e.g. `HEAD`, `master
 ~~~
 $ git log --graph --decorate --oneline
 ~~~
-{: .bash}
+{: .language-bash}
 
 ```
 * b7461bf (HEAD -> master) Include Kelvin conversion
@@ -257,7 +257,7 @@ rather than just up to the current commit.
 $ git checkout HEAD~				# This syntax refers to the commit before HEAD
 $ git log --graph --decorate --oneline --all
 ```
-{: .bash}
+{: .language-bash}
 
 ```
 * b7461bf (master) Include Kelvin conversion
@@ -274,7 +274,7 @@ Let's return to the current version of the project by checking out `master` agai
 ```
 $ git checkout master
 ```
-{: .bash}
+{: .language-bash}
 
 ### Using tags as nicknames for commit identifiers
 
@@ -286,27 +286,27 @@ For example,
 ```    
 $ git tag INITIAL_SCRIPT
 ```
-{: .bash}
+{: .language-bash}
 
 We can list tags by doing:
 
 ```    
 $ git tag
 ```
-{: .bash}
+{: .language-bash}
 
 Now add a line to the script to display 0K in Fahrenheit, then commit the change:
 
 ```
 fprintf('Absolute zero is %g%sF.\n', celsius_to_fahrenheit(kelvin_to_celsius(0)), deg) 
 ```
-{: .matlab}
+{: .language-matlab}
 
 ```
 $ git add temperature_conversions.m
 $ git commit temperature_conversions.m -m "Print 0K in Fahrenhit" 
 ```
-{: .bash}
+{: .language-bash}
 
 We can checkout our previous version using our tag instead of a commit
 identifier.
@@ -314,14 +314,14 @@ identifier.
 ```    
 $ git checkout INITIAL_SCRIPT
 ```
-{: .bash}
+{: .language-bash}
 
 And return to the latest checkout,
 
 ```    
 $ git checkout master
 ```
-{: .bash}
+{: .language-bash}
 
 > ## Top tip: tag significant events 
 > When do you tag? Well, whenever you might want to get back to the exact
@@ -360,7 +360,7 @@ $ git checkout master
 > _____ me.txt         # Edit your file
 > git ____ me.txt      # Display differences between your modified file and the last committed version
 > ```
-> {: .bash}
+> {: .language-bash}
 >
 > > ## Solution
 > >
@@ -376,7 +376,7 @@ $ git checkout master
 > > notepad me.txt       # Edit your file
 > > git diff me.txt      # Display differences between your modified file and the last committed version
 > > ```
-> > {: .bash}
+> > {: .language-bash}
 > {: .solution}
 {: .challenge}
 
