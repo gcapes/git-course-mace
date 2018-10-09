@@ -60,16 +60,16 @@ tell Git which editor we want to be the default one (i.e. Git will always bring
 it up whenever it wants us to provide some information).
 
 You can choose any editor available on your system. For the purpose of this
-session we'll use *gedit*:
+session we'll use *notepad*:
 
 ~~~
-$ git config --global core.editor gedit				# Linux users only.
-								# Windows users should use notepad: see below.
+$ git config --global core.editor notepad				# Windows users only.
+								# Linux users should use gedit: see below.
 ~~~
 {: .bash}
 
 To set up alternative editors, follow the same notation e.g.
-`git config --global core.editor notepad`, `git config --global core.editor vi`,
+`git config --global core.editor gedit`, `git config --global core.editor vi`,
 `git config --global core.editor xemacs`.
 
 ## Git's global configuration
@@ -81,7 +81,7 @@ directory, we'll see a `.gitconfig` file,
 ~~~
 $ cat ~/.gitconfig 
     [user] name = Your Name email = yourname@yourplace.org
-    [core] editor = gedit
+    [core] editor = notepad
 ~~~
 {: .bash}
 
@@ -142,7 +142,7 @@ working directory.
 We can either create a new file from the Git prompt
 
 ```
-gedit kelvin_to_celsius.m
+notepad kelvin_to_celsius.m
 ```
 {: .bash}
 
@@ -236,7 +236,7 @@ we need to  **commit** it:
 ~~~
 $ git commit
 	# Now type a commit message: 'Add kelvin to celsius conversion'
-	# Save the commit message and close your text editor (gedit, notepad etc.)
+	# Save the commit message and close your text editor (notepad etc.)
 ~~~
 {: .bash}
 

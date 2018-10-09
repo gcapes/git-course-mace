@@ -370,10 +370,10 @@ $ git checkout master
 > > mkdir bio            # Create a new directory
 > > cd bio               # Navigate into the new directory
 > > git init             # Initialise a new repository
-> > gedit me.txt         # Create a file and write your biography
+> > notepad me.txt       # Create a file and write your biography
 > > git add me.txt       # Add your biography file to the staging area
 > > git commit           # Commit your staged changes
-> > gedit me.txt         # Edit your file
+> > notepad me.txt       # Edit your file
 > > git diff me.txt      # Display differences between your modified file and the last committed version
 > > ```
 > > {: .bash}

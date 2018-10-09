@@ -325,7 +325,7 @@ but we were then in the "detached HEAD" state.
 > > ## Solution
 > > ```
 > > git checkout HEAD~1  			# Check out the commit one before last
-> > gedit temperature_conversions.m 	# Make some edits
+> > notepad temperature_conversions.m 	# Make some edits
 > > git add temperature_conversions.m 	# Stage the changes
 > > git commit 				# Commit the changes
 > > git branch 				# You should see a message like the one below,
@@ -403,7 +403,7 @@ but we were then in the "detached HEAD" state.
 > >
 > > ```
 > > git checkout HEAD~1			# Checkout the commit before last
-> > gedit temperature_conversions.m		# Modify one of your files
+> > notepad temperature_conversions.m		# Modify one of your files
 > > git commit -a				# Commit all the modified files
 > > git branch				# List local branches
 > > ```

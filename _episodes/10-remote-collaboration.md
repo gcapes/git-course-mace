@@ -149,7 +149,7 @@ legend('Fahrenheit', 'Kelvin', 'Newton', 'location', 'northwest')
 then commit and push the changes:
 
 ```    
-$ gedit temperature_conversions.m	# Add code above
+$ notepad temperature_conversions.m	# Add code above
 $ git add temperature_conversions.m
 $ git commit -m "Add N-C conversion to graph"
 $ git push origin master

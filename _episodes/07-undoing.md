@@ -40,7 +40,7 @@ we can see the contents have been restored to the most up-to-date version in the
 
 ```
 $ git status					# See that we have a clean working directory
-$ gedit temperature_conversions.m		# Inspect file to verify changes have been discarded
+$ notepad temperature_conversions.m		# Inspect file to verify changes have been discarded
 ```
 {: .bash}
 
