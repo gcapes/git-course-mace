@@ -14,7 +14,7 @@ keypoints:
 understand what happened (and why), and always know which is the current version."
 ---
 
-## What is a version control system?
+## What is a version control system (VCS)?
 
 Version control is a piece of software which allows you to record and
 preserve the history of changes made to directories and files. If you
@@ -37,7 +37,7 @@ need to save the new version somewhere else or with a different name.
 of what is what.
 * How do you know what is different between each version?
 
-Without a VCS you will probably end up with lots of nearly-identical
+Without a Version Control System (VCS) you will probably end up with lots of nearly-identical
 (but critically different) copies of the same file, which is confusing
 and wastes hard drive space.
 Your project will probably start to look like this:
