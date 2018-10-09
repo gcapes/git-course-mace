@@ -254,10 +254,10 @@ The mark-up shows us the parts of the file causing the conflict and the
 versions they come from. We now need to manually edit the file to resolve the
 conflict. This means removing the mark-up and doing one of:
 
-- Keep the local version, which is the one marked-up by HEAD i.e.
+- Keep the local version, which is the one marked-up by *HEAD* i.e.
 *% Convert key temperature values between Fahrenheit, Kelvin, and Celsius*
 
-- Keep the remote version, which is the one marked-up by paperWJohn
+- Keep the remote version, which is the one marked-up by *newton*
 i.e. *% Check temperature conversions between Kelvin, Fahrenheit, Celsius and
 % Newton*
 
