@@ -5,21 +5,19 @@ root: .
 **This course is based on materials by [Software Carpentry](http://www.software-carpentry.org)**
 
 > ## Prerequisites
-> In this lesson we use Git from the Unix Shell.
-> Some previous experience with the shell is expected,
-> *but is not mandatory*.
+> In this lesson we use Git from the **Git Bash** program on Windows.
 >
-> Alternatively, this course can be followed on Windows using
-> Git Bash.
-> All of the commands shown will work on Windows using Git Bash,
-> with the exception of the `gedit` command.
-> Gedit is a common text editor on Linux:
-> Windows users should use the `notepad` command instead, and set
-> notepad as the core editor when configuring Git.
+> Alternatively, this course can be followed on Linux or macOS using
+> the terminal.
+> All of the Git commands shown will work on any OS,
+> with the exception of the `notepad` command.
 >
-> You will need a GitHub account for the afternoon session.
-> Please [sign up for an account](https://github.com/) this 
-> morning if you do not already have an account.
+> Linux users should use the `gedit` command instead, and set
+> gedit as the core editor when configuring Git.
+>
+> You will need a GitHub account for episode 7 onwards.
+> Please [sign up for an account](https://github.com/)
+> if you do not already have an account.
 {: .prereq}
 
 ## Resources
