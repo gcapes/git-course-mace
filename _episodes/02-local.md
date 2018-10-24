@@ -65,12 +65,16 @@ session we'll use *notepad*:
 ~~~
 $ git config --global core.editor notepad				# Windows users only.
 								# Linux users should use gedit: see below.
+								# Mac users can use TextEdit: see below.
 ~~~
 {: .language-bash}
 
 To set up alternative editors, follow the same notation e.g.
 `git config --global core.editor gedit`, `git config --global core.editor vi`,
 `git config --global core.editor xemacs`.
+
+Mac users can access the *TextEdit* editor using
+`git config --global core.editor 'open -W -n'`.
 
 ## Git's global configuration
 
