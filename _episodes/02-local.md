@@ -102,7 +102,7 @@ a series of figures and look-up tables.
 ```
 $ cd								# Switch to your home directory.
 $ pwd								# Print working directory (output should be /home/<username>)
-$ mkdir conversions 
+$ mkdir conversions 						# Create a new directory, 'conversions'
 $ cd conversions
 ```	
 {: .language-bash}
