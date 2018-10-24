@@ -359,7 +359,7 @@ and make a commit:
 
 ```
 $ git add celsius_to_fahrenheit.m fahrenheit_to_celsius.m
-$ git commit -m 'Add functions to convert between C and F
+$ git commit -m 'Add functions to convert between C and F'
 ```
 {: .language-bash}
 
